@@ -12,6 +12,15 @@ namespace Nomenclatures
 
         public TimeSpan? DureeConservation { get; set; }
 
+        public TimeSpan? DureeOptimaleUtilisation 
+        { 
+            get
+            {
+                if (Famille != null) return Famille.DureeOptimaleUtilisation;
+                return null;
+            }
+        }
+
         public FamilleMatierePremiere Famille { get; set; }
     }
 }

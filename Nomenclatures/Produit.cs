@@ -26,16 +26,10 @@ namespace Nomenclatures
 
             foreach (var composant in this)
             {
-                if (composant.Component is MatierePremiere mp 
-                    && mp.Famille != null && mp.Famille.DureeOptimaleUtilisation.HasValue)
+                if (composant.Component.DureeOptimaleUtilisation.HasValue)
                 {
-                    var d = dateFabrication + mp.Famille.DureeOptimaleUtilisation.Value;
+                    var d = dateFabrication + composant.Component.DureeOptimaleUtilisation.Value;
                     if (d < dluo) dluo = d;
-                }
-                else if (composant.Component is ProduitSemiFini psf)
-                {
-                    var d = psf.CalculerDLUO(dateFabrication);
-                    if (d.HasValue && d < dluo) dluo = d.Value;
                 }
             }
 
@@ -50,15 +44,10 @@ namespace Nomenclatures
 
             foreach (var composant in this)
             {
-                if (composant.Component is MatierePremiere mp && mp.DureeConservation.HasValue)
+                if (composant.Component.DureeConservation.HasValue)
                 {
-                    var d = dateFabrication + mp.DureeConservation.Value;
+                    var d = dateFabrication + composant.Component.DureeConservation.Value;
                     if (d < dlc) dlc = d;
-                }
-                else if (composant.Component is ProduitSemiFini psf)
-                {
-                    var d = psf.CalculerDLC(dateFabrication);
-                    if (d.HasValue && d < dlc) dlc = d.Value;
                 }
             }
 
