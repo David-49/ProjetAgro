@@ -22,5 +22,11 @@ namespace Nomenclatures
         }
 
         public FamilleMatierePremiere Famille { get; set; }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+            if (Famille != null) Famille.Accept(visitor);
+        }
     }
 }

@@ -24,5 +24,14 @@ namespace Nomenclatures
                     .Min(c => c.DureeConservation);
             }
         }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+            foreach (var cqty in this)
+            {
+                cqty.Component.Accept(visitor);
+            }
+        }
     }
 }

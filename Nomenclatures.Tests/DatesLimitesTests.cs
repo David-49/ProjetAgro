@@ -53,5 +53,27 @@ namespace Nomenclatures.Tests
             Assert.AreEqual(new DateTime(2021, 10, 22), paquetPitchs.CalculerDLUO(dateFabrication));
             Assert.AreEqual(new DateTime(2021, 10, 22), pitch.CalculerDLUO(dateFabrication));
         }
+
+        [Test]
+        public void DLCAvecVisitor()
+        {
+            var paquetPitchs = new ProduitFini();
+            var pitch = new ProduitSemiFini();
+            var farine = new MatierePremiere();
+            var chocolat = new MatierePremiere();
+
+            paquetPitchs.Add(pitch, 8, Unit.Piece);
+            pitch.Add(farine, 100, Unit.Gram);
+            pitch.Add(chocolat, 20, Unit.Gram);
+
+            farine.DureeConservation = TimeSpan.FromDays(30);
+            chocolat.DureeConservation = TimeSpan.FromDays(10);
+
+            var dateFabrication = new DateTime(2021, 10, 12);
+
+            var dlcCalc = new DLCCalculator();
+            Assert.AreEqual(new DateTime(2021, 10, 22), dlcCalc.CalculerDLC(dateFabrication, paquetPitchs));
+            Assert.AreEqual(new DateTime(2021, 10, 22), dlcCalc.CalculerDLC(dateFabrication, pitch));
+        }
     }
 }

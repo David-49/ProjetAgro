@@ -7,5 +7,7 @@ namespace Nomenclatures
         TimeSpan? DureeOptimaleUtilisation { get; }
 
         TimeSpan? DureeConservation { get; }
+
+        void Accept(IVisitor visitor);
     }
 }
