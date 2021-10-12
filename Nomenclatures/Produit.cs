@@ -22,12 +22,12 @@ namespace Nomenclatures
 
         public void Add(IComponent component, double qty, Unit unit)
         {
-            _components.Add(new ComponentQty(
+            _components.Add(new ComponentQty
             {
                 Component = component,
                 Qty = qty,
                 Unit = unit
-            }));
+            });
         }
 
         public void Remove(IComponent component)
