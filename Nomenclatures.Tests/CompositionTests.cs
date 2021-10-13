@@ -13,20 +13,20 @@ namespace Nomenclatures.Tests
             var farine = new MatierePremiere();
             var chocolat = new MatierePremiere();
 
-            paquetPitchs.Add(pitch, 8, Unit.Piece);
-            pitch.Add(farine, 100, Unit.Gram);
-            pitch.Add(chocolat, 20, Unit.Gram);
+            paquetPitchs.Add(pitch, 8);
+            pitch.Add(farine, 100);
+            pitch.Add(chocolat, 20);
 
             Assert.AreEqual(1, paquetPitchs.Count());
             Assert.AreEqual(2, pitch.Count());
 
             Assert.IsTrue(paquetPitchs.Any(c => c.Component == pitch 
-                && c.Qty == 8 && c.Unit == Unit.Piece));
+                && c.Qty == 8));
 
             Assert.IsTrue(pitch.Any(c => c.Component == farine 
-                && c.Qty == 100 && c.Unit == Unit.Gram));
+                && c.Qty == 100));
             Assert.IsTrue(pitch.Any(c => c.Component == chocolat 
-                && c.Qty == 20 && c.Unit == Unit.Gram));
+                && c.Qty == 20));
         }
     }
 }

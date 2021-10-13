@@ -14,9 +14,9 @@ namespace Nomenclatures.Tests
             var farine = new MatierePremiere();
             var chocolat = new MatierePremiere();
 
-            paquetPitchs.Add(pitch, 8, Unit.Piece);
-            pitch.Add(farine, 100, Unit.Gram);
-            pitch.Add(chocolat, 20, Unit.Gram);
+            paquetPitchs.Add(pitch, 8);
+            pitch.Add(farine, 100);
+            pitch.Add(chocolat, 20);
 
             farine.DureeConservation = TimeSpan.FromDays(30);
             chocolat.DureeConservation = TimeSpan.FromDays(10);
@@ -35,9 +35,9 @@ namespace Nomenclatures.Tests
             var farine = new MatierePremiere();
             var chocolat = new MatierePremiere();
 
-            paquetPitchs.Add(pitch, 8, Unit.Piece);
-            pitch.Add(farine, 100, Unit.Gram);
-            pitch.Add(chocolat, 20, Unit.Gram);
+            paquetPitchs.Add(pitch, 8);
+            pitch.Add(farine, 100);
+            pitch.Add(chocolat, 20);
 
             farine.Famille = new FamilleMatierePremiere
             {
@@ -62,9 +62,9 @@ namespace Nomenclatures.Tests
             var farine = new MatierePremiere();
             var chocolat = new MatierePremiere();
 
-            paquetPitchs.Add(pitch, 8, Unit.Piece);
-            pitch.Add(farine, 100, Unit.Gram);
-            pitch.Add(chocolat, 20, Unit.Gram);
+            paquetPitchs.Add(pitch, 8);
+            pitch.Add(farine, 100);
+            pitch.Add(chocolat, 20);
 
             farine.DureeConservation = TimeSpan.FromDays(30);
             chocolat.DureeConservation = TimeSpan.FromDays(10);

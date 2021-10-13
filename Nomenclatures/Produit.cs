@@ -56,13 +56,12 @@ namespace Nomenclatures
             return dlc;
         }
 
-        public void Add(IComponent component, double qty, Unit unit)
+        public void Add(IComponent component, double qty)
         {
             _components.Add(new ComponentQty
             {
                 Component = component,
-                Qty = qty,
-                Unit = unit
+                Qty = qty
             });
         }
 
