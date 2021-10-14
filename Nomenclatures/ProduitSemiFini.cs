@@ -6,6 +6,29 @@ namespace Nomenclatures
 {
     public class ProduitSemiFini : Produit, IComponent
     {
+        public ProduitSemiFini() { }
+
+        public ProduitSemiFini(Nomenclatures.Data.ProduitSemiFini p)
+        {
+            Id = p.Id;
+            Nom = p.Nom;
+            Description = p.Description;
+
+            foreach(var composant in p.Composants)
+            {
+                if(composant.PSF != null)
+                {
+                    Add(new ProduitSemiFini(composant.PSF), composant.Qty);
+                }    
+                else if(composant.MP != null)
+                {
+                    Add(new MatierePremiere(composant.MP), composant.Qty);
+                }         
+                else
+                    throw new NotImplementedException();
+            }
+        }
+
         public TimeSpan? DureeOptimaleUtilisation 
         { 
             get

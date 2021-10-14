@@ -9,5 +9,7 @@ namespace Nomenclatures.Data
         public MatierePremiere MP { get; set; }
 
         public ProduitSemiFini PSF { get; set; }
+
+        public Produit Compose { get; set; }
     }
 }

@@ -26,13 +26,13 @@ namespace Nomenclatures.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ComposeId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MPId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PSFId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProduitFiniId")
                         .HasColumnType("int");
 
                     b.Property<double>("Qty")
@@ -40,11 +40,11 @@ namespace Nomenclatures.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ComposeId");
+
                     b.HasIndex("MPId");
 
                     b.HasIndex("PSFId");
-
-                    b.HasIndex("ProduitFiniId");
 
                     b.ToTable("Composants");
                 });
@@ -136,17 +136,19 @@ namespace Nomenclatures.Migrations
 
             modelBuilder.Entity("Nomenclatures.Data.ComponentQty", b =>
                 {
+                    b.HasOne("Nomenclatures.Data.Produit", "Compose")
+                        .WithMany("Composants")
+                        .HasForeignKey("ComposeId");
+
                     b.HasOne("Nomenclatures.Data.MatierePremiere", "MP")
                         .WithMany()
                         .HasForeignKey("MPId");
 
                     b.HasOne("Nomenclatures.Data.ProduitSemiFini", "PSF")
-                        .WithMany("Composants")
+                        .WithMany()
                         .HasForeignKey("PSFId");
 
-                    b.HasOne("Nomenclatures.Data.ProduitFini", null)
-                        .WithMany("Composants")
-                        .HasForeignKey("ProduitFiniId");
+                    b.Navigation("Compose");
 
                     b.Navigation("MP");
 
@@ -162,12 +164,7 @@ namespace Nomenclatures.Migrations
                     b.Navigation("Famille");
                 });
 
-            modelBuilder.Entity("Nomenclatures.Data.ProduitFini", b =>
-                {
-                    b.Navigation("Composants");
-                });
-
-            modelBuilder.Entity("Nomenclatures.Data.ProduitSemiFini", b =>
+            modelBuilder.Entity("Nomenclatures.Data.Produit", b =>
                 {
                     b.Navigation("Composants");
                 });

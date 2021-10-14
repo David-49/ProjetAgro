@@ -27,30 +27,38 @@ namespace Nomenclatures.Tests
             dbContext.Produits.Add(paquetPitchs);
             dbContext.SaveChanges();
 
-            var paquetPitchsLu = dbContext.Produits
-                .Include(p => p.Composants)
-                    .ThenInclude(cqty => cqty.PSF)
-                        .ThenInclude(p => p.Composants)
-                            .ThenInclude(cqty => cqty.PSF)
-                .Include(p => p.Composants)
-                    .ThenInclude(cqty => cqty.PSF)
-                        .ThenInclude(p => p.Composants)
-                            .ThenInclude(cqty => cqty.MP)
-                .Include(p => p.Composants)
-                    .ThenInclude(cqty => cqty.MP)
-                .FirstOrDefault(p => p.Nom == "paquet de pitchs");
-            Assert.IsNotNull(paquetPitchsLu);
+            try
+            {
+                Assert.IsNotNull(dbContext.Produits.FirstOrDefault(p => p.Id == paquetPitchs.Id));
 
-            Assert.AreEqual(1, paquetPitchs.Composants.Count());
-            Assert.AreEqual(2, pitch.Composants.Count());
+                Assert.AreEqual(1, dbContext.Produits
+                    .Where(p => p.Id == paquetPitchs.Id)
+                    .Select(p => p.Composants.Count()).First());
 
-            Assert.IsTrue(paquetPitchs.Composants.Any(c => c.PSF == pitch 
-                && c.Qty == 8));
+                Assert.IsTrue(dbContext.Produits
+                    .Where(p => p.Id == paquetPitchs.Id)
+                    .SelectMany(p => p.Composants)
+                    .Any(c => c.PSF.Id == pitch.Id && c.Qty == 8));
 
-            Assert.IsTrue(pitch.Composants.Any(c => c.MP == farine 
-                && c.Qty == 100));
-            Assert.IsTrue(pitch.Composants.Any(c => c.MP == chocolat 
-                && c.Qty == 20));
+                Assert.IsTrue(dbContext.Produits
+                    .Where(p => p.Id == pitch.Id)
+                    .SelectMany(p => p.Composants)
+                    .Any(c => c.MP.Id == farine.Id
+                    && c.Qty == 100));
+                Assert.IsTrue(dbContext.Produits
+                    .Where(p => p.Id == pitch.Id)
+                    .SelectMany(p => p.Composants)
+                    .Any(c => c.MP.Id == chocolat.Id
+                    && c.Qty == 20));
+            }
+            finally
+            {
+                dbContext.MatieresPremieres.Remove(farine);
+                dbContext.MatieresPremieres.Remove(chocolat);
+                dbContext.Produits.Remove(pitch);
+                dbContext.Produits.Remove(paquetPitchs);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

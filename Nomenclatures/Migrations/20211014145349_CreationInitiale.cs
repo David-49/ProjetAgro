@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Nomenclatures.Migrations
 {
-    public partial class MigrationInitiale : Migration
+    public partial class CreationInitiale : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace Nomenclatures.Migrations
                     Qty = table.Column<double>(type: "float", nullable: false),
                     MPId = table.Column<int>(type: "int", nullable: true),
                     PSFId = table.Column<int>(type: "int", nullable: true),
-                    ProduitFiniId = table.Column<int>(type: "int", nullable: true)
+                    ComposeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -80,8 +80,8 @@ namespace Nomenclatures.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Composants_Produits_ProduitFiniId",
-                        column: x => x.ProduitFiniId,
+                        name: "FK_Composants_Produits_ComposeId",
+                        column: x => x.ComposeId,
                         principalTable: "Produits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -94,14 +94,14 @@ namespace Nomenclatures.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Composants_ComposeId",
+                table: "Composants",
+                column: "ComposeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Composants_MPId",
                 table: "Composants",
                 column: "MPId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Composants_ProduitFiniId",
-                table: "Composants",
-                column: "ProduitFiniId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Composants_PSFId",

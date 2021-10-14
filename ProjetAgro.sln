@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomenclatures", "Nomenclatu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomenclatures.Tests", "Nomenclatures.Tests\Nomenclatures.Tests.csproj", "{A850229A-C298-41BC-8CDC-FD31698C5581}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nomenclatures.Web", "Nomenclatures.Web\Nomenclatures.Web.csproj", "{6E70EC53-31AC-4865-A931-ADF3C9BEA375}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A850229A-C298-41BC-8CDC-FD31698C5581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A850229A-C298-41BC-8CDC-FD31698C5581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A850229A-C298-41BC-8CDC-FD31698C5581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E70EC53-31AC-4865-A931-ADF3C9BEA375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E70EC53-31AC-4865-A931-ADF3C9BEA375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E70EC53-31AC-4865-A931-ADF3C9BEA375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E70EC53-31AC-4865-A931-ADF3C9BEA375}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

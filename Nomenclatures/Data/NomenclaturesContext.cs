@@ -30,6 +30,10 @@ namespace Nomenclatures.Data
                 .HasOne<ProduitSemiFini>(cqty => cqty.PSF);
             modelBuilder.Entity<ComponentQty>()
                 .HasOne<MatierePremiere>(cqty => cqty.MP);
+
+                modelBuilder.Entity<Produit>()
+                    .HasMany(p => p.Composants)
+                    .WithOne(c => c.Compose);
         }
     }
 }
