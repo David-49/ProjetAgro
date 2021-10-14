@@ -1,12 +1,12 @@
 using System;
 
-namespace Nomenclatures
+namespace Nomenclatures.Data
 {
-    public class MatierePremiere : IComponent
+    public class MatierePremiere
     {
         public MatierePremiere() { }
-
-        public MatierePremiere(Nomenclatures.Data.MatierePremiere mp)
+        
+        public MatierePremiere(Nomenclatures.MatierePremiere mp)
         {
             Nom = mp.Nom;
             Id = mp.Id;
@@ -34,21 +34,6 @@ namespace Nomenclatures
 
         public TimeSpan? DureeConservation { get; set; }
 
-        public TimeSpan? DureeOptimaleUtilisation 
-        { 
-            get
-            {
-                if (Famille != null) return Famille.DureeOptimaleUtilisation;
-                return null;
-            }
-        }
-
         public FamilleMatierePremiere Famille { get; set; }
-
-        public void Accept(IVisitor visitor)
-        {
-            visitor.Visit(this);
-            if (Famille != null) Famille.Accept(visitor);
-        }
     }
 }

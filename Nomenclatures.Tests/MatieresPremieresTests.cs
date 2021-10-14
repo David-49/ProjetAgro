@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Nomenclatures.Data;
 using NUnit.Framework;
 
 namespace Nomenclatures.Tests
@@ -10,13 +11,13 @@ namespace Nomenclatures.Tests
         [Test]
         public void Sauvegarde()
         {
-            var mp = new MatierePremiere
+            var mp = new Nomenclatures.Data.MatierePremiere
             {
                 Nom = "farine",
                 Description = "",
                 PoidsUnitaire = 1,
                 DureeConservation = TimeSpan.FromHours(3),
-                Famille = new FamilleMatierePremiere
+                Famille = new Nomenclatures.Data.FamilleMatierePremiere
                 {
                     DureeOptimaleUtilisation = TimeSpan.FromHours(2)
                 }
