@@ -1,0 +1,10 @@
+@model MatierePremiere
+
+<form method="post" asp-action="Save" >
+    <input type="hidden" asp-for="Id">
+    <label asp-for="Nom"></label>
+    <input asp-for="Nom">
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description"></textarea>
+    <button type="submit">Enregistrer</button>
+</form>
