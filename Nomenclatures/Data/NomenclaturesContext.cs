@@ -17,15 +17,16 @@ namespace Nomenclatures.Data
 
         public DbSet<ComponentQty> Composants { get; set; }
 
+        public NomenclaturesContext()
+            : base(new DbContextOptionsBuilder<NomenclaturesContext>()
+                .UseSqlServer("Server=.;Database=Nomenclatures2;Trusted_connection=True;")
+                .Options)
+        { }
+
         public NomenclaturesContext(
             DbContextOptions<NomenclaturesContext> options)
             : base(options)
         {}
-
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=Nomenclatures2;Trusted_connection=True;");
-        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
