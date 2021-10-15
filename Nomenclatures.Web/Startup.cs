@@ -25,6 +25,7 @@ namespace Nomenclatures.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<NomenclaturesContext>(
                 options => options.UseSqlServer(
@@ -54,6 +55,7 @@ namespace Nomenclatures.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

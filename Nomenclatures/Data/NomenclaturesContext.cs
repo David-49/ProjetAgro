@@ -23,8 +23,7 @@ namespace Nomenclatures.Data
                 .Options)
         { }
 
-        public NomenclaturesContext(
-            DbContextOptions<NomenclaturesContext> options)
+        public NomenclaturesContext(DbContextOptions<NomenclaturesContext> options)
             : base(options)
         {}
 
