@@ -35,5 +35,7 @@ namespace Nomenclatures.Data
         public TimeSpan? DureeConservation { get; set; }
 
         public FamilleMatierePremiere Famille { get; set; }
+
+        public int? FamilleId { get; set; }
     }
 }

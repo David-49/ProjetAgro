@@ -6,45 +6,44 @@ using Nomenclatures.Web.Models;
 
 namespace Nomenclatures.Web
 {
-    public class MatierePremiereController
+    public class FamilleMatierePremiereController
         : Controller
     {
         private NomenclaturesContext _dbContext;
         private const int cstPageSize = 10;
 
-        public MatierePremiereController(NomenclaturesContext dbContext)
+        public FamilleMatierePremiereController(NomenclaturesContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public IActionResult List(int pageIndex)
         {
-            return View(_dbContext.MatieresPremieres
-                .Include(mp => mp.Famille)
-                .OrderBy(mp => mp.Nom)
+            return View(_dbContext.FamillesPremieres
+                .OrderBy(f => f.Nom)
                 .Skip(pageIndex * cstPageSize)
                 .Take(cstPageSize));
         }
 
         public IActionResult Edit(int id)
         {
-            var mp = _dbContext.MatieresPremieres.Find(id);
-            if (mp == null) return NotFound();
+            var f = _dbContext.FamillesPremieres.Find(id);
+            if (f == null) return NotFound();
 
-            return View(new MatierePremiereViewModel(mp, _dbContext.FamillesPremieres.OrderBy(fmp => fmp.Nom)));
+            return View(f);
         }
 
         public IActionResult Create()
         {
-            return View(nameof(Edit), new MatierePremiereViewModel(_dbContext.FamillesPremieres.OrderBy(fmp => fmp.Nom)));
+            return View(nameof(Edit), new Nomenclatures.Data.FamilleMatierePremiere());
         }
 
         public IActionResult Delete(int id)
         {
-            var mp = _dbContext.MatieresPremieres.Find(id);
-            if (mp != null)
+            var f = _dbContext.FamillesPremieres.Find(id);
+            if (f != null)
             {
-                _dbContext.MatieresPremieres.Remove(mp);
+                _dbContext.FamillesPremieres.Remove(f);
                 _dbContext.SaveChanges();
             }
 
@@ -52,15 +51,15 @@ namespace Nomenclatures.Web
         }
 
         [HttpPost]
-        public IActionResult Save(Nomenclatures.Data.MatierePremiere mp)
+        public IActionResult Save(Nomenclatures.Data.FamilleMatierePremiere f)
         {
-            if (mp.Id != 0)
+            if (f.Id != 0)
             {
-                _dbContext.Attach(mp).State = EntityState.Modified;
+                _dbContext.Attach(f).State = EntityState.Modified;
             }
             else
             {
-                _dbContext.MatieresPremieres.Add(mp);
+                _dbContext.FamillesPremieres.Add(f);
             }
 
             _dbContext.SaveChanges();

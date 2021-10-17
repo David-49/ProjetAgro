@@ -1,0 +1,15 @@
+@model FamilleMatierePremiere
+
+<form method="post" asp-action="Save" >
+    <input type="hidden" asp-for="Id">
+    <div class="form-group">
+        <label asp-for="Nom"></label>
+        <input class="form-control" asp-for="Nom">
+    </div>
+    <div class="form-group">
+        <label asp-for="DureeOptimaleUtilisation"></label>
+        <input class="form-control" asp-for="DureeOptimaleUtilisation">
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="List" class="btn btn-primary">Annuler</a>
+</form>

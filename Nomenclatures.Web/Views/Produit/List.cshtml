@@ -1,0 +1,28 @@
+@model IEnumerable<ProduitViewModel>
+
+<div class="text-center">
+    <h1 class="display-4">Produits</h1>
+
+    <a asp-action="Create" class="btn btn-primary">Créer</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Type</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td><a asp-action="Edit" asp-route-id="@p.Id">@p.Nom</a></td>
+                <td>@p.Type</td>
+                <td><a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-primary">Supprimer</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>

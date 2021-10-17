@@ -1,10 +1,31 @@
-@model MatierePremiere
+@model MatierePremiereViewModel
 
 <form method="post" asp-action="Save" >
     <input type="hidden" asp-for="Id">
-    <label asp-for="Nom"></label>
-    <input asp-for="Nom">
-    <label asp-for="Description"></label>
-    <textarea asp-for="Description"></textarea>
-    <button type="submit">Enregistrer</button>
+    <div class="form-group">
+        <label asp-for="Nom"></label>
+        <input class="form-control" asp-for="Nom">
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea class="form-control" asp-for="Description"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="PourcentageHumidite"></label>
+        <input class="form-control" asp-for="PourcentageHumidite">
+    </div>
+    <div class="form-group">
+        <label asp-for="PoidsUnitaire"></label>
+        <input class="form-control" asp-for="PoidsUnitaire">
+    </div>
+    <div class="form-group">
+        <label asp-for="DureeConservation"></label>
+        <input class="form-control" asp-for="DureeConservation">
+    </div>
+    <div class="form-group">
+        <label asp-for="Famille"></label>
+        <select class="form-control" asp-for="FamilleId" asp-items="@(new SelectList(Model.Familles,"Id","Nom"))"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="List" class="btn btn-primary">Annuler</a>
 </form>

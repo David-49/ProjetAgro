@@ -1,15 +1,28 @@
 @model IEnumerable<MatierePremiere>
 
-<h1>Matières premières</h1>
+<div class="text-center">
+    <h1 class="display-4">Matières premières</h1>
 
-<a asp-action="Create">Créer</a>
+    <a asp-action="Create" class="btn btn-primary">Créer</a>
 
-<ul>
-    @foreach (var mp in Model)
-    {
-        <li>
-            <a asp-action="Edit" asp-route-id="@mp.Id">@mp.Nom</a>
-            <a asp-action="Delete" asp-route-id="@mp.Id">Supprimer</a>
-        </li>
-    }
-</ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Famille</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var mp in Model)
+        {
+            <tr>
+                <td><a asp-action="Edit" asp-route-id="@mp.Id">@mp.Nom</a></td>
+                <td>@mp.Famille?.Nom</td>
+                <td><a asp-action="Delete" asp-route-id="@mp.Id" class="btn btn-primary">Supprimer</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
