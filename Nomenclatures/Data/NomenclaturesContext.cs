@@ -19,7 +19,7 @@ namespace Nomenclatures.Data
 
         public NomenclaturesContext()
             : base(new DbContextOptionsBuilder<NomenclaturesContext>()
-                .UseSqlServer("Server=.;Database=Nomenclatures2;Trusted_connection=True;")
+                .UseNpgsql(@"Server=127.0.0.1;Port=5432;Database=Agro;User Id=postgres;Password=ov^*bD!8;")
                 .Options)
         { }
 

@@ -28,7 +28,7 @@ namespace Nomenclatures.Web
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddDbContext<NomenclaturesContext>(
-                options => options.UseSqlServer(
+                options => options.UseNpgsql(
                     Configuration.GetConnectionString("mainDb"))
             );
         }

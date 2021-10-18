@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Nomenclatures.Migrations
 {
-    public partial class CreationInitiale : Migration
+    public partial class NewFour : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +12,10 @@ namespace Nomenclatures.Migrations
                 name: "FamillesPremieres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DureeOptimaleUtilisation = table.Column<TimeSpan>(type: "time", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nom = table.Column<string>(type: "text", nullable: true),
+                    DureeOptimaleUtilisation = table.Column<TimeSpan>(type: "interval", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -24,11 +26,11 @@ namespace Nomenclatures.Migrations
                 name: "Produits",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nom = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Discriminator = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,14 +41,14 @@ namespace Nomenclatures.Migrations
                 name: "MatieresPremieres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PourcentageHumidite = table.Column<int>(type: "int", nullable: false),
-                    PoidsUnitaire = table.Column<double>(type: "float", nullable: false),
-                    DureeConservation = table.Column<TimeSpan>(type: "time", nullable: true),
-                    FamilleId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nom = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    PourcentageHumidite = table.Column<int>(type: "integer", nullable: false),
+                    PoidsUnitaire = table.Column<double>(type: "double precision", nullable: false),
+                    DureeConservation = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    FamilleId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,12 +65,12 @@ namespace Nomenclatures.Migrations
                 name: "Composants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Qty = table.Column<double>(type: "float", nullable: false),
-                    MPId = table.Column<int>(type: "int", nullable: true),
-                    PSFId = table.Column<int>(type: "int", nullable: true),
-                    ComposeId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Qty = table.Column<double>(type: "double precision", nullable: false),
+                    MPId = table.Column<int>(type: "integer", nullable: true),
+                    PSFId = table.Column<int>(type: "integer", nullable: true),
+                    ComposeId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
