@@ -9,7 +9,9 @@ namespace Nomenclatures.Data
         
         public string Nom{ get; set; }
 
-        public string Description { get; set; }   
+        public string Description { get; set; }  
+
+        public bool Bio { get; set; }
 
         public ICollection<ComponentQty> Composants { get; set; }
             = new List<ComponentQty>();

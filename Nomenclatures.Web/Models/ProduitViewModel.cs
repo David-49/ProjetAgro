@@ -15,11 +15,19 @@ namespace Nomenclatures.Web.Models
         {
             Id = p.Id;
             Nom = p.Nom;
+            Bio = p.Bio;
 
             Type = p is Nomenclatures.Data.ProduitFini ? ProductType.ProduitFini : ProductType.ProduitSemiFini;
 
             Composants = JsonSerializer.Serialize(p.Composants
-                .Select(cqty => new { Idc = cqty.Id, Qty = cqty.Qty, Nom = cqty.MP?.Nom ?? cqty.PSF?.Nom, Id = cqty.MP?.Id ?? cqty.PSF?.Id })
+                .Select(cqty => new 
+                { 
+                    Idc = cqty.Id, 
+                    Qty = cqty.Qty, 
+                    Nom = cqty.MP?.Nom ?? cqty.PSF?.Nom, 
+                    Id = cqty.MP?.Id ?? cqty.PSF?.Id,
+                    Type = cqty.MP != null ? "mp" : "p"
+                })
                 .ToList());
         }
 
@@ -31,19 +39,23 @@ namespace Nomenclatures.Web.Models
 
         public string Composants { get; set; }
 
+        public bool Bio { get; set; }
+
         public Nomenclatures.Data.Produit ToData()
         {
             if (Type == ProductType.ProduitFini)
                 return new Nomenclatures.Data.ProduitFini
                 {
                     Id = Id,
-                    Nom = Nom
+                    Nom = Nom,
+                    Bio = Bio
                 };
 
             return new Nomenclatures.Data.ProduitSemiFini
             {
                 Id = Id,
-                Nom = Nom
+                Nom = Nom,
+                Bio = Bio
             };
         }
     }

@@ -13,6 +13,7 @@ namespace Nomenclatures.Data
             Id = pf.Id;
             Nom = pf.Nom;
             Description = pf.Description;
+            Bio = pf.Bio;
 
             foreach(var composant in pf)
             {

@@ -39,7 +39,8 @@ namespace Nomenclatures.Data
 
                 modelBuilder.Entity<Produit>()
                     .HasMany(p => p.Composants)
-                    .WithOne(c => c.Compose);
+                    .WithOne(c => c.Compose)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

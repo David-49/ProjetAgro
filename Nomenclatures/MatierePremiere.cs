@@ -14,6 +14,7 @@ namespace Nomenclatures
             PourcentageHumidite = mp.PourcentageHumidite;
             PoidsUnitaire = mp.PoidsUnitaire;
             DureeConservation = mp.DureeConservation;
+            Bio = mp.Bio;
             if(mp.Famille != null)
                 Famille = new FamilleMatierePremiere
                 {
@@ -42,6 +43,8 @@ namespace Nomenclatures
                 return null;
             }
         }
+
+        public bool Bio { get; set; }
 
         public FamilleMatierePremiere Famille { get; set; }
 

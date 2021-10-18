@@ -6,6 +6,17 @@ namespace Nomenclatures
     public class PoidsCalculateur : IVisitor
     {
         private Stack<double> _poids = new Stack<double>();
+        private bool _onlyBio;
+
+        public PoidsCalculateur()
+        {
+            _onlyBio = false;
+        }
+
+        public PoidsCalculateur(bool onlyBio)
+        {
+            _onlyBio = onlyBio;
+        }
 
         void IVisitor.Visit(ProduitFini pf)
         {
@@ -19,7 +30,10 @@ namespace Nomenclatures
 
         void IVisitor.Visit(MatierePremiere mp)
         {
-            _poids.Push(mp.PoidsUnitaire - mp.PoidsUnitaire * mp.PourcentageHumidite / 100);
+            if(_onlyBio && !mp.Bio)
+                _poids.Push(0);
+            else
+                _poids.Push(mp.PoidsUnitaire - mp.PoidsUnitaire * mp.PourcentageHumidite / 100);
         }
 
         void IVisitor.Visit(FamilleMatierePremiere fmp)

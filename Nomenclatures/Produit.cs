@@ -20,6 +20,31 @@ namespace Nomenclatures
 
         public string Description { get; set; }
 
+        public bool Bio { get; set; }
+
+        public bool IsValid
+        {
+            get
+            {
+                var poids = GetPoidsTotal();
+                var poidsBio = GetPoidsBio();
+
+                return !Bio || poidsBio >= poids * 90 / 100;
+            }
+        }
+
+        public IEnumerable<ErrorMessage> GetErrors()
+        {
+            if (!IsValid)
+            {
+                yield return new ErrorMessage
+                {
+                    Property = "Bio",
+                    Message = "Poids des matières premières bio insuffisant"
+                };
+            }
+        }
+
         public DateTime? CalculerDLUO(DateTime dateFabrication)
         {
             var dluo = new DateTime(9999, 12, 31);
@@ -74,6 +99,10 @@ namespace Nomenclatures
         {
             return _components.GetEnumerator();
         }
+
+        protected abstract double GetPoidsTotal();
+
+        protected abstract double GetPoidsBio();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
