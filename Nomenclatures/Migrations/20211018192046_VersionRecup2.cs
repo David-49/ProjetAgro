@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Nomenclatures.Migrations
 {
-    public partial class Test1Add : Migration
+    public partial class VersionRecup2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace Nomenclatures.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nom = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
+                    Bio = table.Column<bool>(type: "boolean", nullable: false),
                     Discriminator = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -48,7 +49,8 @@ namespace Nomenclatures.Migrations
                     PourcentageHumidite = table.Column<int>(type: "integer", nullable: false),
                     PoidsUnitaire = table.Column<double>(type: "double precision", nullable: false),
                     DureeConservation = table.Column<TimeSpan>(type: "interval", nullable: true),
-                    FamilleId = table.Column<int>(type: "integer", nullable: true)
+                    FamilleId = table.Column<int>(type: "integer", nullable: true),
+                    Bio = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,7 +88,7 @@ namespace Nomenclatures.Migrations
                         column: x => x.ComposeId,
                         principalTable: "Produits",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Composants_Produits_PSFId",
                         column: x => x.PSFId,
