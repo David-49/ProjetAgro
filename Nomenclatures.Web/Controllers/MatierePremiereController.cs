@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Nomenclatures.Data;
 using Nomenclatures.Web.Models;
 
@@ -54,16 +55,19 @@ namespace Nomenclatures.Web
         [HttpPost]
         public IActionResult Save(Nomenclatures.Data.MatierePremiere mp)
         {
-            if (mp.Id != 0)
+            if (ModelState.IsValid)
             {
-                _dbContext.Attach(mp).State = EntityState.Modified;
-            }
-            else
-            {
-                _dbContext.MatieresPremieres.Add(mp);
-            }
+                if (mp.Id != 0)
+                {
+                    _dbContext.Attach(mp).State = EntityState.Modified;
+                }
+                else
+                {
+                    _dbContext.MatieresPremieres.Add(mp);
+                }
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
 
             return RedirectToAction(nameof(List));
         }

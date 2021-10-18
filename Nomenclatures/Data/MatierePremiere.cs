@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Nomenclatures.Data
 {
@@ -22,6 +23,7 @@ namespace Nomenclatures.Data
                 };
         }
 
+        [Required]
         public string Nom { get; set; }
 
         public int Id { get; set; }
