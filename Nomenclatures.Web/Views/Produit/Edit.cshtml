@@ -42,7 +42,7 @@
 
         $(function(){
             for (var composant of JSON.parse(($('#Composants').val()))) {
-                addComposant(composant.Idc, composant.Qty, composant.Nom, composant.Id);
+                addComposant(composant.Idc, composant.Qty, composant.Nom, composant.Id, composant.Type);
             }
 
             $('#btnAddComponent').click(function() {

@@ -41,7 +41,7 @@ namespace Nomenclatures.Web
 
         public IActionResult Create()
         {
-            return View(nameof(Edit), null);
+            return View(nameof(Edit), new ProduitViewModel());
         }
 
         public IActionResult Delete(int id)
@@ -71,24 +71,35 @@ namespace Nomenclatures.Web
                     var qty = Convert.ToInt32(Request.Form["comp_qty" + index]);
                     var type = Request.Form["comp_type" + index];
 
+                    Data.ComponentQty cpqty = null;
                     if (type == "p")
                     {
-                        pData.Composants.Add(new Data.ComponentQty
+                        cpqty = new Data.ComponentQty
                         {
                             Id = idc,
                             Qty = qty,
                             PSF = new Data.ProduitSemiFini { Id = id }
-                        });
+                        };
                     }
                     else
                     {
-                        pData.Composants.Add(new Data.ComponentQty
+                        cpqty = new Data.ComponentQty
                         {
                             Id = idc,
                             Qty = qty,
                             MP = new Data.MatierePremiere { Id = id }
-                        });
+                        };
                     }
+
+                    pData.Composants.Add(cpqty);
+
+                    if(cpqty.MP != null) 
+                        _dbContext.Attach(cpqty.MP).State = EntityState.Unchanged;
+                    else
+                        _dbContext.Attach(cpqty.PSF).State = EntityState.Unchanged;
+
+                    if (idc != 0) 
+                        _dbContext.Attach(pData.Composants.Last()).State = EntityState.Modified;
                 }
             }
 

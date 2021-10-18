@@ -19,7 +19,14 @@ namespace Nomenclatures.Web.Models
             Type = p is Nomenclatures.Data.ProduitFini ? ProductType.ProduitFini : ProductType.ProduitSemiFini;
 
             Composants = JsonSerializer.Serialize(p.Composants
-                .Select(cqty => new { Idc = cqty.Id, Qty = cqty.Qty, Nom = cqty.MP?.Nom ?? cqty.PSF?.Nom, Id = cqty.MP?.Id ?? cqty.PSF?.Id })
+                .Select(cqty => new 
+                { 
+                    Idc = cqty.Id, 
+                    Qty = cqty.Qty, 
+                    Nom = cqty.MP?.Nom ?? cqty.PSF?.Nom, 
+                    Id = cqty.MP?.Id ?? cqty.PSF?.Id,
+                    Type = cqty.MP != null ? "mp" : "p"
+                })
                 .ToList());
         }
 
