@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nomenclatures.Migrations
 {
     [DbContext(typeof(NomenclaturesContext))]
-    [Migration("20211018085545_NewFour")]
-    partial class NewFour
+    [Migration("20211018094023_Test1Add")]
+    partial class Test1Add
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,7 @@ namespace Nomenclatures.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("PoidsUnitaire")

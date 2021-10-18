@@ -84,6 +84,7 @@ namespace Nomenclatures.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("PoidsUnitaire")

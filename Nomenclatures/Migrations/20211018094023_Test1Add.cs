@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Nomenclatures.Migrations
 {
-    public partial class NewFour : Migration
+    public partial class Test1Add : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,7 @@ namespace Nomenclatures.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nom = table.Column<string>(type: "text", nullable: true),
+                    Nom = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     PourcentageHumidite = table.Column<int>(type: "integer", nullable: false),
                     PoidsUnitaire = table.Column<double>(type: "double precision", nullable: false),
