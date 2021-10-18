@@ -11,6 +11,7 @@ namespace Nomenclatures
             Id = p.Id;
             Nom = p.Nom;
             Description = p.Description;
+            Bio = p.Bio;
 
             foreach(var composant in p.Composants)
             {
@@ -25,6 +26,16 @@ namespace Nomenclatures
                 else
                     throw new NotImplementedException();
             }
+        }
+
+        protected override double GetPoidsTotal()
+        {
+            return new PoidsCalculateur().Caculer(this);
+        }
+
+        protected override double GetPoidsBio()
+        {
+            return new PoidsCalculateur(true).Caculer(this);
         }
 
         public void Accept(IVisitor visitor)

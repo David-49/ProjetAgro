@@ -11,6 +11,7 @@ namespace Nomenclatures.Data
             Id = p.Id;
             Nom = p.Nom;
             Description = p.Description;
+            Bio = p.Bio;
 
             foreach(var composant in p)
             {

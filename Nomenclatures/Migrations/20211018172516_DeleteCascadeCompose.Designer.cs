@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nomenclatures.Data;
 
 namespace Nomenclatures.Migrations
 {
     [DbContext(typeof(NomenclaturesContext))]
-    partial class NomenclaturesContextModelSnapshot : ModelSnapshot
+    [Migration("20211018172516_DeleteCascadeCompose")]
+    partial class DeleteCascadeCompose
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -24,6 +24,10 @@
         <input class="form-control" asp-for="DureeConservation">
     </div>
     <div class="form-group">
+        <label asp-for="Bio"></label>
+        <input class="form-control" asp-for="Bio">
+    </div>
+    <div class="form-group">
         <label asp-for="Famille"></label>
         <select class="form-control" asp-for="FamilleId" asp-items="@(new SelectList(Model.Familles,"Id","Nom"))"></select>
     </div>

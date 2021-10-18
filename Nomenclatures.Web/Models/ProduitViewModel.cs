@@ -15,6 +15,7 @@ namespace Nomenclatures.Web.Models
         {
             Id = p.Id;
             Nom = p.Nom;
+            Bio = p.Bio;
 
             Type = p is Nomenclatures.Data.ProduitFini ? ProductType.ProduitFini : ProductType.ProduitSemiFini;
 
@@ -38,19 +39,23 @@ namespace Nomenclatures.Web.Models
 
         public string Composants { get; set; }
 
+        public bool Bio { get; set; }
+
         public Nomenclatures.Data.Produit ToData()
         {
             if (Type == ProductType.ProduitFini)
                 return new Nomenclatures.Data.ProduitFini
                 {
                     Id = Id,
-                    Nom = Nom
+                    Nom = Nom,
+                    Bio = Bio
                 };
 
             return new Nomenclatures.Data.ProduitSemiFini
             {
                 Id = Id,
-                Nom = Nom
+                Nom = Nom,
+                Bio = Bio
             };
         }
     }
