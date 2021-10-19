@@ -15,6 +15,11 @@
         <input class="form-control" asp-for="Bio">
         <span asp-validation-for="Bio"></span>
     </div>
+    <div id="divPU" class="form-group">
+        <label asp-for="PrixUnitaire"></label>
+        <input class="form-control" asp-for="PrixUnitaire">
+        <span asp-validation-for="PrixUnitaire"></span>
+    </div>
 
     <input type="hidden" asp-for="Composants">
 
@@ -46,6 +51,15 @@
         }
 
         $(function(){
+
+            if($('#Type').val() == "ProduitSemiFini") {
+                $('#divPU').hide();
+            }
+
+            $('#Type').change(function(){
+                $('#divPU').toggle();
+            });
+
             for (var composant of JSON.parse(($('#Composants').val()))) {
                 addComposant(composant.Idc, composant.Qty, composant.Nom, composant.Id, composant.Type);
             }

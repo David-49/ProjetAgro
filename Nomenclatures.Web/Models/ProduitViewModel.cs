@@ -17,6 +17,11 @@ namespace Nomenclatures.Web.Models
             Nom = p.Nom;
             Bio = p.Bio;
 
+            if (p is Nomenclatures.Data.ProduitFini pf)
+            {
+                PrixUnitaire = pf.PrixUnitaire;
+            }
+
             Type = p is Nomenclatures.Data.ProduitFini ? ProductType.ProduitFini : ProductType.ProduitSemiFini;
 
             Composants = JsonSerializer.Serialize(p.Composants
@@ -41,6 +46,8 @@ namespace Nomenclatures.Web.Models
 
         public bool Bio { get; set; }
 
+        public decimal PrixUnitaire { get; set; }
+
         public Nomenclatures.Data.Produit ToData()
         {
             if (Type == ProductType.ProduitFini)
@@ -48,7 +55,8 @@ namespace Nomenclatures.Web.Models
                 {
                     Id = Id,
                     Nom = Nom,
-                    Bio = Bio
+                    Bio = Bio,
+                    PrixUnitaire = PrixUnitaire
                 };
 
             return new Nomenclatures.Data.ProduitSemiFini

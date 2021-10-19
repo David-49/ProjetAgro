@@ -1,0 +1,10 @@
+@using Nomenclatures
+@model AugmentationPrixProduitViewModel
+<form method="post">
+    <div class="form-group">
+        <label asp-for="PourcentageAugmentation"></label>
+        <input class="form-control" asp-for="PourcentageAugmentation">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Exécuter</button>
+</form>

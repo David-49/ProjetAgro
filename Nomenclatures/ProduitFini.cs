@@ -6,12 +6,15 @@ namespace Nomenclatures
     {
         public ProduitFini() { }
 
+        public decimal PrixUnitaire { get; set; }
+
         public ProduitFini(Nomenclatures.Data.ProduitFini p)
         {
             Id = p.Id;
             Nom = p.Nom;
             Description = p.Description;
             Bio = p.Bio;
+            PrixUnitaire = p.PrixUnitaire;
 
             foreach(var composant in p.Composants)
             {

@@ -14,6 +14,7 @@ namespace Nomenclatures.Data
             Nom = pf.Nom;
             Description = pf.Description;
             Bio = pf.Bio;
+            PrixUnitaire = pf.PrixUnitaire;
 
             foreach(var composant in pf)
             {
@@ -37,5 +38,7 @@ namespace Nomenclatures.Data
                     throw new NotImplementedException();
             }
         }
+
+        public decimal PrixUnitaire { get; set; }
     }
 }

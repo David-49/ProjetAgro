@@ -133,5 +133,20 @@ namespace Nomenclatures.Web
 
             return RedirectToAction(nameof(List));
         }
+
+        public IActionResult AugmentationPU()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AugmentationPU(AugmentationPrixProduitViewModel appv)
+        {
+            var cmd = new AugmentationPrixProduit(_dbContext);
+            cmd.PourcentageAugmentation = appv.PourcentageAugmentation;
+            cmd.Execute();
+
+            return RedirectToAction(nameof(List));
+        }
     }
 }
