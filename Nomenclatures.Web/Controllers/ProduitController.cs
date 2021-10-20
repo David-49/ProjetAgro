@@ -48,7 +48,11 @@ namespace Nomenclatures.Web
         [HttpPost]
         public IActionResult Create(string type)
         {
-            return View(nameof(Edit) + type);
+            return View(nameof(Edit) + type, 
+                typeof(Produit).Assembly
+                    .GetType($"Nomenclatures.Data.{type}")
+                    .GetConstructor(new Type[]{})
+                    .Invoke(null));
         }
 
         public IActionResult Delete(int id)
