@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +21,15 @@ namespace Nomenclatures.Web
 
         public IActionResult List(int pageIndex)
         {
-            return View(_dbContext.Produits
+            var types = typeof(Produit).Assembly
+                .GetTypes().Where(t => t.BaseType == typeof(Produit))
+                .OrderBy(t => t.Name);
+
+            return View(((IEnumerable<Nomenclatures.Data.Produit>)_dbContext.Produits
                 .OrderBy(f => f.Nom)
                 .Skip(pageIndex * cstPageSize)
                 .Take(cstPageSize)
-                .Select(p => new ProduitViewModel(p)));
+                .Select(p => p), (IEnumerable<Type>)types));
         }
 
         public IActionResult Edit(int id)
@@ -36,12 +42,13 @@ namespace Nomenclatures.Web
                 .FirstOrDefault(prd => prd.Id == id);
             if (p == null) return NotFound();
 
-            return View(new ProduitViewModel(p));
+            return View(nameof(Edit) + p.GetType().Name, p);
         }
 
-        public IActionResult Create()
+        [HttpPost]
+        public IActionResult Create(string type)
         {
-            return View(nameof(Edit), new ProduitViewModel());
+            return View(nameof(Edit) + type);
         }
 
         public IActionResult Delete(int id)
@@ -57,81 +64,91 @@ namespace Nomenclatures.Web
         }
 
         [HttpPost]
-        public IActionResult Save(ProduitViewModel p)
+        public IActionResult SaveProduitFini(Nomenclatures.Data.ProduitFini p)
+        {
+            return Save(p, new ProduitFini(p));
+        }
+
+        [HttpPost]
+        public IActionResult SaveProduitSemiFini(Nomenclatures.Data.ProduitSemiFini p)
+        {
+            return Save(p, new ProduitSemiFini(p));
+        }
+
+        private IActionResult Save(Nomenclatures.Data.Produit p, Nomenclatures.Produit produitDomain)
         {
             if (ModelState.IsValid)
             {
-                var pData = p.ToData();
-
-                foreach (var key in Request.Form.Keys)
-                {
-                    if (key.StartsWith("comp_qty"))
-                    {
-                        var index = key.Substring("comp_qty".Length);
-                        var idc = Convert.ToInt32(Request.Form["comp_idc" + index]);
-                        var id = Convert.ToInt32(Request.Form["comp_id" + index]);
-                        var qty = Convert.ToInt32(Request.Form["comp_qty" + index]);
-                        var type = Request.Form["comp_type" + index];
-
-                        Data.ComponentQty cpqty = null;
-                        if (type == "p")
-                        {
-                            cpqty = new Data.ComponentQty
-                            {
-                                Id = idc,
-                                Qty = qty,
-                                PSF = _dbContext.ProduitsSemiFinis.Find(id)
-                            };
-                        }
-                        else
-                        {
-                            cpqty = new Data.ComponentQty
-                            {
-                                Id = idc,
-                                Qty = qty,
-                                MP = _dbContext.MatieresPremieres.Find(id)
-                            };
-                        }
-
-                        pData.Composants.Add(cpqty);
-
-                        if (cpqty.MP != null)
-                            _dbContext.Attach(cpqty.MP).State = EntityState.Unchanged;
-                        else
-                            _dbContext.Attach(cpqty.PSF).State = EntityState.Unchanged;
-
-                        if (idc != 0)
-                            _dbContext.Attach(pData.Composants.Last()).State = EntityState.Modified;
-                    }
-                }
-
-                Produit produitDomain = null;
-                if(p.Type == ProductType.ProduitFini)
-                    produitDomain = new ProduitFini((Nomenclatures.Data.ProduitFini)pData);
-                else
-                    produitDomain = new ProduitSemiFini((Nomenclatures.Data.ProduitSemiFini)pData);
-
+                PrepareSave(p);
+                
                 if (!produitDomain.IsValid)
                 {
-                    foreach(var me in produitDomain.GetErrors())
+                    foreach (var me in produitDomain.GetErrors())
                         ModelState.AddModelError(me.Property, me.Message);
 
                     return View(nameof(Edit), p);
                 }
 
-                if (p.Id != 0)
-                {
-                    _dbContext.Attach(pData).State = EntityState.Modified;
-                }
-                else
-                {
-                    _dbContext.Produits.Add(pData);
-                }
-
                 _dbContext.SaveChanges();
+
+                return RedirectToAction(nameof(List));
             }
 
-            return RedirectToAction(nameof(List));
+            return View("Edit" + p.GetType().Name, p);
+        }
+
+        private void PrepareSave(Nomenclatures.Data.Produit p)
+        {
+            foreach (var key in Request.Form.Keys)
+            {
+                if (key.StartsWith("comp_qty"))
+                {
+                    var index = key.Substring("comp_qty".Length);
+                    var idc = Convert.ToInt32(Request.Form["comp_idc" + index]);
+                    var id = Convert.ToInt32(Request.Form["comp_id" + index]);
+                    var qty = Convert.ToInt32(Request.Form["comp_qty" + index]);
+                    var type = Request.Form["comp_type" + index];
+
+                    Data.ComponentQty cpqty = null;
+                    if (type == "ProduitSemiFini")
+                    {
+                        cpqty = new Data.ComponentQty
+                        {
+                            Id = idc,
+                            Qty = qty,
+                            PSF = _dbContext.ProduitsSemiFinis.Find(id)
+                        };
+                    }
+                    else
+                    {
+                        cpqty = new Data.ComponentQty
+                        {
+                            Id = idc,
+                            Qty = qty,
+                            MP = _dbContext.MatieresPremieres.Find(id)
+                        };
+                    }
+
+                    p.Composants.Add(cpqty);
+
+                    if (cpqty.MP != null)
+                        _dbContext.Attach(cpqty.MP).State = EntityState.Unchanged;
+                    else
+                        _dbContext.Attach(cpqty.PSF).State = EntityState.Unchanged;
+
+                    if (idc != 0)
+                        _dbContext.Attach(p.Composants.Last()).State = EntityState.Modified;
+                }
+            }            
+
+            if (p.Id != 0)
+            {
+                _dbContext.Attach(p).State = EntityState.Modified;
+            }
+            else
+            {
+                _dbContext.Produits.Add(p);
+            }
         }
 
         public IActionResult AugmentationPU()

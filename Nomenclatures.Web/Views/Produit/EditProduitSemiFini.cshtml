@@ -1,0 +1,15 @@
+@model Nomenclatures.Data.ProduitSemiFini
+
+<form method="post" asp-action="SaveProduitSemiFini" >
+    <partial name="_FormProduit" model="Model"></partial>
+
+    <partial name="_Composants" model="Model"></partial>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="List" class="btn btn-primary">Annuler</a>
+</form>
+
+@section Scripts
+{
+    <partial name="_ComposantsScripts" model="Model"></partial>
+}

@@ -1,0 +1,32 @@
+<script>
+    var index = 0;
+
+    function addComposant(idc, qty, nom, id, type) {
+        $('#components').append('<div class="form-group"><label>' + nom + ', quantité :</label><input class="form-control" name="comp_qty' + index + '" value="' + qty + '">'
+                + '<input type="hidden" name="comp_id' + index + '" value="' + id + '">'
+                + '<input type="hidden" name="comp_idc' + index + '" value="' + idc + '">'
+                + '<input type="hidden" name="comp_type' + index + '" value="' + type + '"></div>');
+        index++;
+    }
+
+    $(function(){
+
+        @if (Model != null && Model.Composants != null)
+        {
+            foreach (var composant in Model.Composants)
+            {
+                <text>@Html.Raw($"addComposant({composant.Id}, {composant.Qty}, '{composant.MP?.Nom ?? composant.PSF?.Nom}', {composant.MP?.Id ?? composant.PSF?.Id}, '{(composant.MP?.GetType() ?? composant.PSF?.GetType()).Name}');")</text>
+            }
+        }
+
+        $('#btnAddComponent').click(function() {
+            var nom = prompt('Nom du produit ou de la matière ?');
+
+            $.get( "/api/ProduitEtMatiere/" + nom, function(pmp) {
+                addComposant(0, 1, nom, pmp.id, pmp.type);
+            })
+
+            return false;
+        });
+    });
+</script>

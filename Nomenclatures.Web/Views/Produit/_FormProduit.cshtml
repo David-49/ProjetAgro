@@ -1,0 +1,12 @@
+@model Nomenclatures.Data.Produit
+
+<input type="hidden" asp-for="Id">
+<div class="form-group">
+    <label asp-for="Nom"></label>
+    <input class="form-control" asp-for="Nom">
+</div>
+<div class="form-group">
+    <label asp-for="Bio"></label>
+    <input class="form-control" asp-for="Bio">
+    <span asp-validation-for="Bio"></span>
+</div>
