@@ -30,7 +30,7 @@ namespace Nomenclatures.Tests
 
             var mpLu = dbContext.MatieresPremieres
                 .Include(m => m.Famille)
-                .FirstOrDefault(m => m.Nom == "farine");
+                .FirstOrDefault(m => m.Id == mp.Id);
 
             dbContext.MatieresPremieres.Remove(mpLu);
             dbContext.SaveChanges();
