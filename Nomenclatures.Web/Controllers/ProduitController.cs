@@ -70,12 +70,14 @@ namespace Nomenclatures.Web
         [HttpPost]
         public IActionResult SaveProduitFini(Nomenclatures.Data.ProduitFini p)
         {
+            PrepareSave(p);
             return Save(p, new ProduitFini(p));
         }
 
         [HttpPost]
         public IActionResult SaveProduitSemiFini(Nomenclatures.Data.ProduitSemiFini p)
         {
+            PrepareSave(p);
             return Save(p, new ProduitSemiFini(p));
         }
 
@@ -83,14 +85,12 @@ namespace Nomenclatures.Web
         {
             if (ModelState.IsValid)
             {
-                PrepareSave(p);
-                
                 if (!produitDomain.IsValid)
                 {
                     foreach (var me in produitDomain.GetErrors())
                         ModelState.AddModelError(me.Property, me.Message);
 
-                    return View(nameof(Edit), p);
+                    return View("Edit" + p.GetType().Name, p);
                 }
 
                 _dbContext.SaveChanges();

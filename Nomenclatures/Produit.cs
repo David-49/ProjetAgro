@@ -5,10 +5,15 @@ using System.Linq;
 
 namespace Nomenclatures
 {
-    public abstract class Produit : IComposite
+    public abstract class Produit : DomainObject, IComposite
     {
         private List<ComponentQty> _components = new List<ComponentQty>();
         private string _nom;
+
+        public Produit()
+        {
+            AddRule(ValiderBio);
+        }
 
         public string Nom 
         { 
@@ -22,27 +27,37 @@ namespace Nomenclatures
 
         public bool Bio { get; set; }
 
-        public bool IsValid
+        public decimal PrixDeRevient
         {
             get
             {
-                var poids = GetPoidsTotal();
-                var poidsBio = GetPoidsBio();
+                decimal prix = 0;
+                foreach (var cqty in this)
+                {
+                    prix += (decimal)cqty.Qty * cqty.Component.PrixDeRevient;
+                }
 
-                return !Bio || poidsBio >= poids * 90 / 100;
+                return prix;
             }
         }
 
-        public IEnumerable<ErrorMessage> GetErrors()
+        private ErrorMessage ValiderBio(DomainObject domainObject)
         {
-            if (!IsValid)
+            if(!Bio) return null;
+
+            var poids = GetPoidsTotal();
+            var poidsBio = GetPoidsBio();
+
+            if (poidsBio < poids * 90 / 100)
             {
-                yield return new ErrorMessage
+                return new ErrorMessage
                 {
                     Property = "Bio",
                     Message = "Poids des matières premières bio insuffisant"
                 };
             }
+
+            return null;
         }
 
         public DateTime? CalculerDLUO(DateTime dateFabrication)

@@ -1,14 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Nomenclatures
 {
     public class ProduitFini : Produit
     {
-        public ProduitFini() { }
-
-        public decimal PrixUnitaire { get; set; }
+        public ProduitFini()
+        {
+            AddRule(new ReglePrix().Valider);
+        }
 
         public ProduitFini(Nomenclatures.Data.ProduitFini p)
+            : this()
         {
             Id = p.Id;
             Nom = p.Nom;
@@ -30,6 +34,8 @@ namespace Nomenclatures
                     throw new NotImplementedException();
             }
         }
+
+        public decimal PrixUnitaire { get; set; }
 
         protected override double GetPoidsTotal()
         {

@@ -16,6 +16,7 @@ namespace Nomenclatures.Data
             PoidsUnitaire = mp.PoidsUnitaire;
             DureeConservation = mp.DureeConservation;
             Bio = mp.Bio;
+            PrixUnitaire = mp.PrixUnitaire;
             if(mp.Famille != null)
                 Famille = new FamilleMatierePremiere
                 {
@@ -36,6 +37,8 @@ namespace Nomenclatures.Data
         public double PoidsUnitaire { get; set; }
 
         public TimeSpan? DureeConservation { get; set; }
+
+        public decimal PrixUnitaire { get; set; }
 
         public FamilleMatierePremiere Famille { get; set; }
 

@@ -16,6 +16,7 @@ namespace Nomenclatures.Web.Models
             PoidsUnitaire = mp.PoidsUnitaire;
             PourcentageHumidite = mp.PourcentageHumidite;
             Bio = mp.Bio;
+            PrixUnitaire = mp.PrixUnitaire;
 
             Familles = familles;
         }

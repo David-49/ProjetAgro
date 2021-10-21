@@ -8,6 +8,8 @@ namespace Nomenclatures
 
         TimeSpan? DureeConservation { get; }
 
+        decimal PrixDeRevient { get; }
+
         void Accept(IVisitor visitor);
     }
 }

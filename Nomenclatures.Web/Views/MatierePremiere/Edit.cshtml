@@ -28,6 +28,11 @@
         <input class="form-control" asp-for="Bio">
     </div>
     <div class="form-group">
+        <label asp-for="PrixUnitaire"></label>
+        <input class="form-control" asp-for="PrixUnitaire">
+        <span asp-validation-for="PrixUnitaire"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Famille"></label>
         <select class="form-control" asp-for="FamilleId" asp-items="@(new SelectList(Model.Familles,"Id","Nom"))"></select>
     </div>

@@ -2,7 +2,7 @@ using System;
 
 namespace Nomenclatures
 {
-    public class MatierePremiere : IComponent
+    public class MatierePremiere : DomainObject, IComponent
     {
         public MatierePremiere() { }
 
@@ -15,6 +15,7 @@ namespace Nomenclatures
             PoidsUnitaire = mp.PoidsUnitaire;
             DureeConservation = mp.DureeConservation;
             Bio = mp.Bio;
+            PrixUnitaire = mp.PrixUnitaire;
             if(mp.Famille != null)
                 Famille = new FamilleMatierePremiere
                 {
@@ -45,6 +46,10 @@ namespace Nomenclatures
         }
 
         public bool Bio { get; set; }
+
+        public decimal PrixUnitaire { get; set; }
+
+        public decimal PrixDeRevient { get { return PrixUnitaire; } }
 
         public FamilleMatierePremiere Famille { get; set; }
 
