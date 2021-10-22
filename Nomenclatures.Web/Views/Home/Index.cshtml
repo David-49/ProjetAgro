@@ -6,3 +6,66 @@
     <h1 class="display-4">Gestion des nomenclatures</h1>
     <p>Projet d'apprentissage C# et POO</p>
 </div>
+
+<input type="text" id="nomContient"><button id="btnSearch">Rechercher</button>
+<input type="checkbox" id="inclureFMP"><label for="inclureFMP">Inclure les familles</label>
+<input type="checkbox" id="inclureMP"><label for="inclureMP">Inclure les matières</label>
+<input type="checkbox" id="inclurePF"><label for="inclurePF">Inclure les produits finis</label>
+<input type="checkbox" id="inclurePSF"><label for="inclurePSF">Inclure les produits semi finis</label>
+<select id="estBio">
+    <option value="tous">Tous</option>
+    <option value="bio">Bio</option>
+    <option value="nonBio">Non bio</option>
+</select>
+
+<div>
+    <table id="searchResults">
+
+    </table>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(function() {
+            $('#btnSearch').click(function(){
+                let estBio = null;
+                let choixBio = $('#estBio').val();
+                if (choixBio == 'bio') {
+                    estBio = true;
+                } else if (choixBio == 'nonBio') {
+                    estBio = false;
+                }
+
+                let criterias = {
+                    NomContient : $('#nomContient').val(),
+                    InclureMatierePremiere : $('#inclureMP').is(':checked'),
+                    InclureFamilleMatierePremiere : $('#inclureFMP').is(':checked'),
+                    InclureProduitFini : $('#inclurePF').is(':checked'),
+                    InclureProduitSemiFini : $('#inclurePSF').is(':checked'),
+                    EstBio : estBio
+                }
+
+                fetch('/api/search', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json, text/plain',
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body: JSON.stringify(criterias)
+                })
+                .then(res => res.json() )
+                .then(function(data) {
+                    
+                    $('#searchResults').empty();
+
+                    for (var r of data) {
+                        $('#searchResults')
+                            .append('<tr><td><a href="' + r.editUrl + '">' + r.nom + '</a></td></tr>')
+                    }
+
+                });
+            });
+        })
+    </script>
+}
