@@ -18,15 +18,15 @@ namespace Nomenclatures.Web.Controllers
         [HttpGet("{nom}")]
         public IActionResult GetId([FromRoute]string nom)
         {
-            var id = _dbContext.Produits
+            var id = _dbContext.ProduitsSemiFinis
                 .FirstOrDefault(p => p.Nom == nom)?.Id;
 
-            if (id.HasValue) return Ok(new { id, type = "p" });
+            if (id.HasValue) return Ok(new { id, type = nameof(ProduitSemiFini) });
 
             id = _dbContext.MatieresPremieres
                 .FirstOrDefault(mp => mp.Nom == nom)?.Id;
 
-            if (id.HasValue) return Ok(new { id, type = "mp" });
+            if (id.HasValue) return Ok(new { id, type = nameof(MatierePremiere) });
 
             return NotFound();
         }
