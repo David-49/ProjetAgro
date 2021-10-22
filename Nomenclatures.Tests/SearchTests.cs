@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nomenclatures.Data;
 using NUnit.Framework;
 
 namespace Nomenclatures.Tests
@@ -53,13 +54,31 @@ namespace Nomenclatures.Tests
                 _matieresPremieres.AsQueryable(),
                 _produits.AsQueryable())
             {
-                TypesRecherches = new Type[] { typeof(Data.MatierePremiere), typeof(Data.ProduitFini) }
+                InclureMatierePremiere = true,
+                InclureProduitFini = true,
+                InclureProduitSemiFini = false,
+                InclureFamilleMatierePremiere = false
             };
 
             var result = search.Execute();
 
             Assert.AreEqual(4, result.Count());
             Assert.IsFalse(result.Any(r => r.Nom == "famille farine"));
+        }
+
+        [Test]
+        public void SearchByTypeOnDb()
+        {
+            using var dbContext = new NomenclaturesContext();
+            Assert.DoesNotThrow(() => new Search(dbContext.FamillesPremieres, dbContext.MatieresPremieres, dbContext.Produits)
+            {
+                InclureMatierePremiere = true,
+                InclureProduitFini = true,
+                InclureProduitSemiFini = false,
+                InclureFamilleMatierePremiere = false,
+                EstBio = true,
+                NomContient = "i"
+            }.Execute().ToList());
         }
 
         [SetUp]
